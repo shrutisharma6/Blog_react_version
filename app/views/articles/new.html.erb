@@ -2,7 +2,7 @@
 
 
 <div id="form" class="col-10">
-<%= render 'shared/errors'%>
+<%= render 'shared/errors' ,obj:@article%>
 
   <%= form_with scope: :articles, url: articles_path, local:true do |form| %>
     <div class="form-group row">
@@ -30,3 +30,4 @@
   <% end %>
 
 </div>
+<%= render 'layouts/footer'%>

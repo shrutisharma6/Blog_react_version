@@ -1,0 +1,32 @@
+<h1 class ="text-center mt-4">Bloggers</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Image</th>
+      <th scope="col">Username</th>
+      <th scope="col">E-Mail</th>
+      <th scope="col">No of articles</th>
+      <th scope="col">Go to Profile</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |u| %>
+    <tr>
+        <td><%= link_to gravator_for(u,size:50)%></td>
+        <td><%= u.username%></td>
+        <td><%= u.email%></td>
+        <td><p class="text-muted">No of articles</p></td>
+        <td><%=button_to'Show Profile',u, method: :get, class:"btn btn-success btn-sm"%></td>
+        
+        
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<div class="flickr_pagination">
+    <%= will_paginate @users, :previous_label => 'Previous', :next_label => 'Next', :container => false%>
+</div> 
+
+<%= render 'layouts/footer'%>

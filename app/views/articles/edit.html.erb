@@ -2,7 +2,7 @@
 
 
 <div id="form" class="col-10">
-<%= render 'shared/errors'%>
+<%= render 'shared/errors' ,obj: @article%>
   <%= form_with(model: @article, local:true) do |form| %>
     <div class="form-group row">
       
@@ -22,10 +22,7 @@
         </div>
         
     </div>
-
-    
-    
-  <% end %>
-
-</div>
+    <% end %>
+  </div>
+<%= render 'layouts/footer'%>
 
