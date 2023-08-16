@@ -7,20 +7,20 @@
     <div class="form-group row">
         <%= form.label :username, class:"col-2 col-form-label" %>
         <div class="col-10">
-          <%= form.text_field :username, class:"form-control"%>
+          <%= form.text_field :username, class:"form-control shadow rounded"%>
         </div>
     </div>
 
     <div class="form-group row">
         <%= form.label :email , class:"col-2 col-form-label"%>
         <div class="col-10">
-        <%= form.email_field :email, class:"form-control" %>
+        <%= form.email_field :email, class:"form-control shadow rounded" %>
         <br>
         </div>
         
         <%= form.label :password , class:"col-2 col-form-label" %>
         <div class="col-10">
-        <%= form.password_field :password, class:"form-control" %>
+        <%= form.password_field :password, class:"form-control shadow rounded" %>
         
         <br>
         <%= form.submit(@user.new_record? ? "Sign Up" :"Update Profile" ,class:"btn btn-success")%><br><br><%=link_to'Show all articles',articles_url ,class:"btn btn-dark"%>
