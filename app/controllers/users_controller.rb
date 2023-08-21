@@ -19,10 +19,9 @@ class UsersController < ApplicationController
     end
 
     def update
-        
         if @user.update(user_params)
             flash[:notice]="Your profile was updated successfully"
-            redirect_to articles_url
+            redirect_to users_url
         else
             render 'edit'
         end
