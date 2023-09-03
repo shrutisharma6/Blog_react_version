@@ -1,0 +1,27 @@
+/* user.css */
+
+.shared-background {
+  background-image: url('https://img.freepik.com/free-photo/blue-surface-with-study-tools_23-2147864592.jpg');
+  background-size: cover;
+  background-position: center;
+   min-height: 100vh; 
+   display: flex; 
+   flex-direction: column; 
+   align-items: center;
+  justify-content: flex-start; 
+  padding-top: 30px;
+}
+
+.glassmorphic-box {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  width: 100vw;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  text-align: center;
+  color: #041b84;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}

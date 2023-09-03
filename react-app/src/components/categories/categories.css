@@ -1,0 +1,68 @@
+
+  
+  /* Shared background image */
+  .shared-background {
+    background-image: url('https://img.freepik.com/free-photo/blue-surface-with-study-tools_23-2147864592.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+    justify-content: flex-start;
+    padding-top: 50px;
+  }
+  
+  /* Shared button styles */
+  .shared-button {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 10px;
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    
+  }
+  
+  .shared-button:hover {
+    background-color: transparent !important;
+    border: 1px solid #f6f7f7; /* Add a border on hover for emphasis */
+    color: #007bff !important; /* Change the text color on hover */
+    transform: scale(1.02); /* Add a hover effect, adjust the scale as needed */
+  }
+  
+  /* Glassmorphism effect for CreateArticle */
+  .glassmorphic-box {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    text-align: center;
+    color: #041b84;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+  
+
+  /* Styles for the badge container */
+  .badge-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Adjust the gap between badges as needed */
+    margin-top: 10px;
+  }
+  
+  /* Styles for the custom badge */
+  .custom-badge {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 14px;
+  }

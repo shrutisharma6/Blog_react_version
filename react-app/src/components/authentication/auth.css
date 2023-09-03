@@ -1,0 +1,69 @@
+/* auth.css */
+body {
+    margin: 0; /* Remove default body margin */
+    overflow: hidden; /* Hide overflow to prevent scrolling */
+  }
+  
+  .login-background {
+    background-image: url('https://img.freepik.com/free-photo/blue-surface-with-study-tools_23-2147864592.jpg'); /* Replace with your background image URL */
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Adjust the layout to a column */
+    align-items: center; /* Center content horizontally */
+    justify-content: flex-start; /* Align content to the top */
+    padding-top: 50px; /* Add space between navbar and box */
+  }
+  
+  .glassmorphic-box {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    width: 80%; /* Use percentage for responsiveness */
+    max-width: 600px; /* Increase the maximum width for larger login box */
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    text-align: center; /* Center text */
+    color: #041b84; /* Text color */
+    margin-top: 20px; /* Add space between navbar and box */
+    transition: all 0.3s ease; /* Add transition for hover effect */
+  }
+  
+  .glassmorphic-box:hover {
+    background: rgba(255, 255, 255, 0.05); /* Make the box transparent on hover */
+    /* transform: scale(1.05); Add a slight zoom effect on hover */
+  }
+  
+  .login-button {
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 10px;
+    width: 100%; /* Make the button width 100% */
+    height: 50px; /* Increase the button height */
+    margin-top: 20px; /* Add space between input fields and button */
+  }
+  
+  .login-button:hover {
+    background-color: transparent; /* Make the button transparent on hover */
+    transform: scale(1.05); /* Add a slight zoom effect on hover */
+  }
+  
+  /* Style the input boxes */
+  .input-field {
+    background: transparent;
+    border: 1px solid #041b84; /* Add a border */
+    color: #041b84; /* Text color */
+    padding: 12px; /* Adjust padding */
+    width: 100%; /* Make the width 100% */
+    transition: background-color 0.3s ease; /* Add transition for hover effect */
+    border-radius: 10px;
+}
+  
+  .input-field:hover {
+    color: #041b84;
+    background-color: #fff; /* Fill white color on hover */
+  }
+  

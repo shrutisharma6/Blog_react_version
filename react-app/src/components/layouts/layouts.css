@@ -1,0 +1,59 @@
+#navbar {
+    background-color: #163550 !important; /* You can change this color to your desired background color */
+  }
+  
+  /* Navbar brand text style */
+  #navbar .navbar-brand {
+    color: #fff; /* Text color */
+    font-size: 0.4in; /* Font size */
+    font-weight: bold; /* Font weight */
+  }
+  
+  /* Navbar toggle button style */
+  #navbar .navbar-toggler-icon {
+    background-color: "none"; /* Toggle button color */
+    border: none; /* Remove border */
+    color: #fff; /* Toggle button color */
+  }
+  
+  /* Navbar links style */
+  #navbar .nav-link {
+    color: #fff; /* Text color */
+    font-weight: bold; /* Font weight */
+    transition: color 0.3s; /* Smooth color transition on hover */
+    font-size: 0.2in;
+  
+  }
+  
+  #navbar .nav-link:hover {
+    color: #17a2b8; /* Text color on hover */
+    background-color: #333; /* Change the background color on hover */
+    transition: all 0.3s ease; 
+  }
+  
+  /* Navbar dropdown menu style */
+  #navbar .dropdown-menu {
+    background-color: #163550; /* Dropdown background color */
+  }
+  
+  #navbar .dropdown-item {
+    color: #fff; /* Dropdown item text color */
+    transition: background-color 0.3s; /* Smooth background color transition on hover */
+  }
+  
+  #navbar .dropdown-item:hover {
+    background-color: #17a2b8; /* Background color on hover */
+    color: #fff; /* Text color on hover */
+  }
+  
+  /* Sticky Navbar */
+  #navbar.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+/* Navbar toggle button style */
+
+
+
