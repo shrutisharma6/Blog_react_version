@@ -3,11 +3,15 @@ module Api
         class ArticlesController < ApplicationController
             before_action :set_article, only: [:show, :edit, :update, :destroy, :like]
             before_action :article_params, only: [:create, :update]
+            
+            before_action :authenticate_user_custom, except: [:index, :show]
 
-            def like
-                @article.increment!(:likes)
-                render json: ArticleSerializer.new(@articles).serializable_hash
-            end
+            
+
+            # def like
+            #     @article.increment!(:likes)
+            #     render json: ArticleSerializer.new(@articles).serializable_hash
+            # end
             
         
             def show
@@ -31,7 +35,7 @@ module Api
         
             def create
                 @article = Article.new(article_params)
-                @article.user = User.first
+                @article.user = @current_user
                 if @article.save
                     render json: ArticleSerializer.new(@article).serializable_hash
 
@@ -58,7 +62,7 @@ module Api
                 end
                 
             end
-        
+           
             private
                 def set_article
                     @article=Article.find(params[:id])
@@ -68,12 +72,8 @@ module Api
                       params.require(:article).permit(:title, :description, category_ids: [])
                     
                 end
-        
                 
-        
         end
-        
-        
     end
 end
 

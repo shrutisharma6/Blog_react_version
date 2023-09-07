@@ -138,7 +138,7 @@ form {
   align-items: center;
   justify-content: flex-start;
   padding-top: 20px; /* Reduce the top padding to reduce space */
-  overflow-y: auto; /* Add vertical scrollbar when content exceeds container height */
+  overflow: scroll; 
   max-height: calc(100vh - 40px); /* Limit the maximum height to prevent excessive scrolling */
 }
 

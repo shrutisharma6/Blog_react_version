@@ -20,11 +20,13 @@ Rails.application.routes.draw do
         post '/login', to: 'sessions#create'
         delete '/logout', to: 'sessions#destroy'
         get '/signup', to: 'users#new'
+        # post '/signup', to: 'users#create'
       end
       # resources :articles
       resources :articles do
         member do
           post 'like', to: 'articles#like'
+          post 'comment', to: 'article#comments'
         end
       end
       resources :users
@@ -35,3 +37,6 @@ Rails.application.routes.draw do
   
 
 end
+
+
+

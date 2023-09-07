@@ -26,6 +26,11 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'jsonapi-serializer'
 gem 'rack-cors'
 gem 'devise'
+# gem 'devise_token_auth'
+# gem 'jwt'
+
+gem 'pry'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

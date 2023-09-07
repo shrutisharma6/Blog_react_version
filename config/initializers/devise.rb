@@ -313,7 +313,7 @@ Devise.setup do |config|
 
   config.timeout_in = 30.minutes
   config.expire_all_remember_me_on_sign_out = true
-
+  
   # config.authentication_keys = [:email]
   # config.token_authentication_key = :auth_token
   # config.skip_session_storage = [:http_auth, :token_auth]

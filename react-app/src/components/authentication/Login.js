@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axiosInstance from '../../utils/axiosInstance';
 import {
   Box,
   Button,
@@ -7,11 +8,11 @@ import {
   FormControl,
   Checkbox,
   Heading,
-  Flex, // Add Flex component for layout
+  Flex, 
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './auth.css'; // Import your CSS file
+import './auth.css'; 
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -30,25 +31,35 @@ function Login({ onLogin }) {
           password,
         },
       });
-
-      if (response.data.message === 'Logged in successfully') {
-        onLogin();
+      if (response.data.token) {
+        console.log(response);
+        const token = response.data.token;
+        const user_id =response.data.user_id;
+        localStorage.setItem('authToken', token); 
+        localStorage.setItem('user_id', user_id); 
         navigate('/');
+      } 
+      else {
+        setError('Invalid email or password',error);
       }
-    } catch (error) {
-      setError('Invalid email or password');
+    } 
+    catch (error) {
+      setError('Invalid email or password',error);
+
     }
+
+    
   };
 
   return (
     <div className="login-background">
-      <Flex // Use Flex for layout
+      <Flex
         className="glassmorphic-box"
         p={6}
-        flexDirection="column" // Stack items vertically
-        alignItems="center" // Center items horizontally
-        justifyContent="center" // Center items vertically
-        height="auto" // Increase the height of the login box
+        flexDirection="column" 
+        alignItems="center" 
+        justifyContent="center" 
+        height="auto" 
       >
         <Heading as="h1" size="xl" mb={6}>
           Log In

@@ -7,10 +7,10 @@ import {
   FormControl,
   Heading,
   Flex,
-} from '@chakra-ui/react'; // Import Chakra UI components
+} from '@chakra-ui/react'; 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './auth.css'; // Import your CSS file
+import './auth.css'; 
 
 function SignUp({ onSignUp }) {
   const [username, setUsername] = useState('');
@@ -31,6 +31,14 @@ function SignUp({ onSignUp }) {
           password,
         },
       });
+      if (response.data.token) {
+        console.log(response);
+        const token = response.data.token;
+        const user_id =response.data.user_id;
+        localStorage.setItem('authToken', token); 
+        localStorage.setItem('user_id', user_id); 
+        navigate('/');
+      } 
 
       if (response.status === 201) {
         onSignUp();

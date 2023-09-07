@@ -14,6 +14,8 @@ const ShowArticle = () => {
   const [userName, setUserName] = useState(null);
   const [categoryName, setCategoryName] = useState([]);
   const [likes, setLikes] = useState('');
+  const user_id = localStorage.getItem('user_id');
+  const [canEditArticle, setEditArticle]= useState(false);
 
   useEffect(() => {
     axios.get(`http://localhost:3000/api/v1/articles/${articleId}`)
@@ -22,6 +24,12 @@ const ShowArticle = () => {
         setArticle(response.data);
         const userName = response.data.included[0].attributes.username;
         setUserName(userName);
+
+        const articleUser=response.data.data.relationships.user.data.id;
+        
+        if(articleUser == user_id){
+          setEditArticle(true);
+        }
 
         const categories = response.data.included
           .filter(item => item.type === 'category')
@@ -40,14 +48,6 @@ const ShowArticle = () => {
     return <p>Loading...</p>;
   }
 
-  const handleLike = async () => {
-    try {
-      const response = await axios.post(`http://localhost:3000/api/v1/articles/${articleId}/like`);
-      setLikes(response.data.attributes.likes + 1);
-    } catch (error) {
-      console.error('Error liking article:', error);
-    }
-  };
 
   return (
     <div className="shared-background">
@@ -80,23 +80,19 @@ const ShowArticle = () => {
           </Form.Group>
           <p>By: {userName}</p>
           <div className="badge-container">
-  {categoryName.map((category, index) => (
-    <Badge key={index} bg="secondary" className="custom-badge">
-      {category}
-    </Badge>
-  ))}
-</div>
-
-          <div onClick={handleLike}>
-            <p>Likes: {article.data.attributes.likes}</p>
-            <Button type="submit" variant="success" className="shared-button">
-              Like
-            </Button>
+            {categoryName.map((category, index) => (
+              <Badge key={index} bg="secondary" className="custom-badge">
+                {category}
+              </Badge>
+            ))}
           </div>
+
           <div>
+          {canEditArticle && (
             <Button  className="shared-button" as={Link} to={`/EditArticle/${articleId}`}>
               Edit Article
             </Button>
+            )}
           </div>
         </Form>
       </div>

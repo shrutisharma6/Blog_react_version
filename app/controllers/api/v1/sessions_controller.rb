@@ -1,18 +1,18 @@
 include Devise::Controllers::SignInOut
-
 module Api
     module V1
         class SessionsController < Devise::SessionsController
-            before_action :configure_sign_in_params, only: [:create]
-            
+             before_action :configure_sign_in_params, only: [:create]
             def create
                 
-                user = warden.authenticate(auth_options)
-                if user
+                user = User.find_for_authentication(email: params[:user][:email])    
+                
+                 if user && user.valid_password?(params[:user][:password])       
                     sign_in(user)
-                    render json: { message: 'Logged in successfully ', user: user }
-                else
-                    render json: { error: 'Invalid email or password' }, status: :unprocessable_entity
+                    render json: { token: user.authenticatable_salt, user_id: user.id } 
+                   
+                else      
+                    render json: { error: 'Invalid email or password' }, status: :unauthorized    
                 end
             end
 

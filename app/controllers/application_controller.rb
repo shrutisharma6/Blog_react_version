@@ -1,22 +1,20 @@
 class ApplicationController < ActionController::Base
     
     protect_from_forgery with: :exception
-    helper_method :current_user, :logged_in?
     skip_before_action :verify_authenticity_token
-
-    def current_user
-        @current_user ||=User.find(session[:user_id]) if session[:user_id]
-    end
-     
     
-    def logged_in?
-        !!current_user
-    end
-
-    def require_user
-        if !logged_in?
-            flash[:alert]="You must be logged in to perform that action"
-            redirect_to login_path
+     
+    def authenticate_user_custom
+        token = params[:headers][:Authorization]&.split('Bearer')&.last
+        user_id = params[:user]["user_id"]
+        auth_token= " " + User.find(user_id).authenticatable_salt
+        if token.present? && token == auth_token
+         @current_user = User.find(user_id)
+         if @current_user.nil?
+            render json: { error: 'Invalid token or user not found' }, status: :unauthorized
+        end
+        else
+          render json: { error: 'Authorization token missing' }, status: :unauthorized
         end
     end
 

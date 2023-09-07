@@ -1,5 +1,3 @@
-// ShowUser.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -18,12 +16,15 @@ import {
   Td,
   Link as ChakraLink,
 } from '@chakra-ui/react';
-import './user.css'; // Import the CSS module
+import './user.css'; 
 
 const ShowUser = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
   const [articles, setArticles] = useState([]);
+  const user_id = localStorage.getItem('user_id');
+  // const [canEditUser, setEditUser]= useState(false);
+  const canEditUser = user_id == userId;
 
   useEffect(() => {
     axios.get(`http://localhost:3000/api/v1/users/${userId}`)
@@ -48,6 +49,7 @@ const ShowUser = () => {
   if (!user) {
     return <p>Loading...</p>;
   }
+  
 
   return (
     <Box className='shared-background'>
@@ -55,6 +57,11 @@ const ShowUser = () => {
         <Text as="h1">{user.data.attributes.username}'s Profile</Text>
         <Text>Email: {user.data.attributes.email}</Text>
         <Text as="h3">Articles By {user.data.attributes.username}</Text>
+        {canEditUser && (
+          <Button variant="solid" as={Link} to={`/EditUser/${userId}`} className='shared-button'>
+          Edit Profile
+        </Button>
+        )}
 
         <Table variant="striped" colorScheme="blueAlpha" size="md" marginTop="20px">
           <Thead>

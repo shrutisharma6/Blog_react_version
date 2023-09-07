@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
     before_action :set_article, only: [:show, :edit, :update, :destroy]
     before_action :article_params, only: [:create, :update]
-    before_action :require_user, only: [:new, :edit, :create, :update, :destroy]
+    # before_action :require_user, only: [:new, :edit, :create, :update, :destroy]
     before_action :require_same_user, only: [:edit, :update, :destroy]
 
     def show
@@ -21,8 +21,9 @@ class ArticlesController < ApplicationController
     end
 
     def create
+        
         @article = Article.new(article_params)
-        @article.user = current_user
+        @article.user = @current_user
         if @article.save
             flash[:notice] = "Article was created successfully."
             redirect_to articles_url
