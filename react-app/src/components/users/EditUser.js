@@ -105,7 +105,7 @@ function EditUser() {
               Password
             </Form.Label>
             <Col sm={10}>
-              <Form.Control
+              <Form.Control type="password"
                 placeholder="Enter new password here..." 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

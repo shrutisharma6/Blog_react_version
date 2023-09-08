@@ -25,12 +25,16 @@ const ShowUser = () => {
   const user_id = localStorage.getItem('user_id');
   // const [canEditUser, setEditUser]= useState(false);
   const canEditUser = user_id == userId;
+  const [isAdmin ,setIsAdmin] = useState(false);
 
   useEffect(() => {
     axios.get(`http://localhost:3000/api/v1/users/${userId}`)
       .then(response => {
         console.log('API Response:', response.data);
         setUser(response.data);
+        if (response.data && response.data.data.attributes && response.data.data.attributes.admin === true) {
+          setIsAdmin(true);
+        }
 
         const articles = response.data.included
           .filter(item => item.type === 'article')
@@ -57,7 +61,7 @@ const ShowUser = () => {
         <Text as="h1">{user.data.attributes.username}'s Profile</Text>
         <Text>Email: {user.data.attributes.email}</Text>
         <Text as="h3">Articles By {user.data.attributes.username}</Text>
-        {canEditUser && (
+        {canEditUser && isAdmin && (
           <Button variant="solid" as={Link} to={`/EditUser/${userId}`} className='shared-button'>
           Edit Profile
         </Button>

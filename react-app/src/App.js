@@ -16,6 +16,7 @@ import EditArticle from './components/articles/EditArticle';
 import ShowCategory from './components/categories/ShowCategory';
 import Footer from './components/layouts/Footer';
 import EditUser from './components/users/EditUser';
+import CreateCategories from './components/categories/CreateCategories';
 
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
         <Route path="/ShowUser/:userId" Component={ShowUser} />
         <Route path="/EditArticle/:articleId" Component={EditArticle} />
         <Route path="/ShowCategory/:categoryId" Component={ShowCategory} />
-        
+        <Route path="/CreateCategories" Component={CreateCategories} />
         <Route path="/EditUser/:userId" Component={EditUser} />
 
       </Routes>

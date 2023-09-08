@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
     
     protect_from_forgery with: :exception
     skip_before_action :verify_authenticity_token
-    
-     
     def authenticate_user_custom
         token = params[:headers][:Authorization]&.split('Bearer')&.last
         user_id = params[:user]["user_id"]

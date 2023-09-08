@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import './categories.css';
 
-function createCategories(){
+import {  useNavigate} from 'react-router-dom';
+
+function CreateCategories(){
     const [name, setName] = useState('');
     const [error, setError] = useState('');
+    const [category, setCategory] = useState('');
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -13,8 +22,10 @@ function createCategories(){
                 name,
             },
         });
-        if (response.status ===201) {
+        if (response.status ===200) {
             setName('');
+            setCategory('');
+            navigate('/Categories');
         }
     }
     catch(error){
@@ -30,10 +41,8 @@ function createCategories(){
               <Form.Label column sm={2} >
                 Name
               </Form.Label>
-              <Col sm={10}>
-                <Form.Control type="text" placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} />
-              </Col>
-            </Form.Group>
+             <Form.Control type="text" placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
+             </Form.Group>
             <Form.Group>
               <Button type="submit" variant="primary" className="shared-button" onClick={handleSubmit}>
                 Create Category
@@ -45,3 +54,5 @@ function createCategories(){
       </div>
     );
 };
+
+export default CreateCategories;

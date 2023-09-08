@@ -10,6 +10,7 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   const { colorMode } = useColorMode(); 
   const user_id = localStorage.getItem('user_id');
+  const [isAdmin ,setIsAdmin] = useState(false);
   useEffect(() => {
     const API_URL = 'http://localhost:3000/api/v1/categories';
     axios
@@ -21,6 +22,26 @@ const Categories = () => {
         console.error('Error fetching categories:', error);
       });
   }, []);
+  
+    useEffect(() => {
+      
+  
+        if (user_id) {
+          const API_URL = `http://localhost:3000/api/v1/users/${user_id}`;
+          console.log('API_URL:', API_URL);
+          axios
+            .get(API_URL)
+            .then((response) => {
+              console.log(response);
+              if (response.data && response.data.data.attributes && response.data.data.attributes.admin === true) {
+                setIsAdmin(true);
+              }
+              
+            })
+          }
+    }, [user_id]);
+ 
+  
 
   return (
     <Flex
@@ -39,6 +60,14 @@ const Categories = () => {
         overflowX="auto" 
       >
         <h1>Categories</h1>
+        <p>
+        {isAdmin ?(
+        <Link to={'/CreateCategories'}>
+                      <Button variant="success" size="lg" className="btn">
+                        Create category
+                      </Button>
+                    </Link>)  :null}</p>
+                    
         <Table
           variant="striped"
           colorScheme={colorMode === 'dark' ? 'gray' : 'teal'} 

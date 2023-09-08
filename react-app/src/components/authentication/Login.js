@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axiosInstance from '../../utils/axiosInstance';
 import {
   Box,
   Button,
