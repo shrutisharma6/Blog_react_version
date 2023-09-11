@@ -1,10 +1,10 @@
 module Api
     module V1
         class ArticlesController < ApplicationController
-            before_action :set_article, only: [:show, :edit, :update, :destroy, :like]
+            before_action :set_article, only: [:show, :edit, :update, :destroy, :like, :comment, :show_comment]
             before_action :article_params, only: [:create, :update]
             
-            before_action :authenticate_user_custom, except: [:index, :show]
+            before_action :authenticate_user_custom, except: [:index, :show, :show_comment]
 
             
 
@@ -12,10 +12,22 @@ module Api
             #     @article.increment!(:likes)
             #     render json: ArticleSerializer.new(@articles).serializable_hash
             # end
-            
+            def comment
+                @comment= @article.comments.create(params.require(:comment).permit(:body))
+                @comment.user= @current_user
+                if @comment.save
+                    render json: {message: "Comment created"}
+                else 
+                    render json: {error: "Not created "}
+                end
+            end
+            def show_comment
+                @comments= @article.comments
+                render json: CommentSerializer.new(@comments).serializable_hash
+            end
         
             def show
-                render json: ArticleSerializer.new(@article, include: [:user, :categories]).serializable_hash
+                render json: ArticleSerializer.new(@article, include: [:user, :categories, :comments]).serializable_hash
 
             end
         

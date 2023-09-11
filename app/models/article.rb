@@ -4,5 +4,5 @@ class Article <ApplicationRecord
     has_many :categories, through: :article_categories
     validates :title, presence: true
     validates :description, presence: true, length: {minimum:5, maximum: 100}
-    
+    has_many :comments
 end

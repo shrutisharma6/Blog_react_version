@@ -26,7 +26,8 @@ Rails.application.routes.draw do
       resources :articles do
         member do
           post 'like', to: 'articles#like'
-          post 'comment', to: 'article#comments'
+          get 'comment', to: 'articles#show_comment'
+          post 'comment', to: 'articles#comment'
         end
       end
       resources :users

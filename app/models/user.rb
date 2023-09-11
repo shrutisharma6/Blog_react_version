@@ -4,7 +4,7 @@ class User <ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
     has_many :articles, dependent: :destroy
-    
+    has_many :comments
     before_save { self.email=email.downcase}
     validates :username, presence:true,
                          uniqueness: { case_sensitive: false }, 
