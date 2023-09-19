@@ -17,7 +17,8 @@ import ShowCategory from './components/categories/ShowCategory';
 import Footer from './components/layouts/Footer';
 import EditUser from './components/users/EditUser';
 import CreateCategories from './components/categories/CreateCategories';
-
+import Friends from './components/users/Friends';
+import PendingRequest from './components/users/PendingRequest';
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
         <Route path="/ShowCategory/:categoryId" Component={ShowCategory} />
         <Route path="/CreateCategories" Component={CreateCategories} />
         <Route path="/EditUser/:userId" Component={EditUser} />
+
+        <Route path="/ShowUser/:userId/Friends" Component={Friends} />
+        <Route path="/ShowUser/:userId/PendingRequest" Component={PendingRequest} />
 
       </Routes>
       <Footer/>

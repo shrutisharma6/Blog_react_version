@@ -1,4 +1,3 @@
-import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -23,18 +22,15 @@ function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/Users">Bloggers</Nav.Link>
-            <Nav.Link as={Link} to="/SignUp ">Sign Up</Nav.Link>
-            {authToken ? (
-              <Nav.Link onClick={handleLogout} className="nav-link">
-              Log Out
-            </Nav.Link>
-            ):null}
-
-          {authToken ?  null: (
-            <Nav.Link as={Link} to="/Login">Log In</Nav.Link>
-          ) }
-           
+          <NavDropdown title="Bloggers" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/Users">All Bloggers</NavDropdown.Item>
+              {authToken ? (
+                <>
+                <NavDropdown.Item as={Link} to={`/ShowUser/${user_id}/Friends`}>My Friends</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={`/ShowUser/${user_id}/PendingRequest`}> Pending Requests</NavDropdown.Item>
+                </>
+              ):null }
+            </NavDropdown>
             <NavDropdown title="Articles" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/Articles">Read Articles</NavDropdown.Item>
               {authToken ?(
@@ -44,6 +40,20 @@ function Navigation() {
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/Categories">Visit Categories</NavDropdown.Item>
             </NavDropdown>
+            
+            {authToken ? (
+              <Nav.Link onClick={handleLogout} className="nav-link">
+              Log Out
+            </Nav.Link>
+            ):null}
+
+          {authToken ?  null: (
+            <>
+            <Nav.Link as={Link} to="/Login">Log In</Nav.Link>
+            <Nav.Link as={Link} to="/SignUp ">Sign Up</Nav.Link>
+            </>
+          ) }
+           
           </Nav>
         </Navbar.Collapse>
       

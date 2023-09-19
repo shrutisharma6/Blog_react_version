@@ -1,8 +1,6 @@
 module Api 
     module V1 
-        class CategoriesController < ApplicationController
-            #  before_action :require_admin,except: [:index, :show]
-            
+        class CategoriesController < ApplicationController    
             def new
                 @category=Category.new
             end
@@ -27,20 +25,7 @@ module Api
                 render json: CategorySerializer.new(@category, include: [:articles]).serializable_hash
             end
         
-            # def edit
-            #     @category= Category.find(params[:id])
-            # end
-            # def update
-            #     @category= Category.find(params[:id])
-            #     if @category.update(category_params)
-            #         flash[:notice]= "Category was updated successfully."
-            #         redirect_to @category
-            #     else
-            #         render 'edit'
-            #     end
-        
-            # end
-        
+
             private
                 def category_params
                     params.require(:category).permit(:name)

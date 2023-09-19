@@ -5,6 +5,13 @@ class User <ApplicationRecord
          :recoverable, :rememberable, :validatable
     has_many :articles, dependent: :destroy
     has_many :comments
+
+    has_many :friendships, dependent: :destroy
+    has_many :friends, through: :friendships
+
+    has_many :sent_friend_requests, foreign_key: :sent_by_id, class_name: 'FriendRequest'
+    has_many :received_friend_requests, foreign_key: :sent_to_id, class_name: 'FriendRequest'
+    
     before_save { self.email=email.downcase}
     validates :username, presence:true,
                          uniqueness: { case_sensitive: false }, 

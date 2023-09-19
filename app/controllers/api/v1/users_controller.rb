@@ -1,7 +1,7 @@
 module Api
     module V1
         class UsersController < ApplicationController
-            before_action :set_user, only: [:show, :edit, :update, :destroy]
+            before_action :set_user, only: [:show, :edit, :update, :destroy, :show_friends]
             # before_action :require_user, only: [:edit, :update]
             # before_action :require_same_user, only: [:edit, :update, :destroy]
             # skip_before_action :verify_authenticity_token
@@ -45,8 +45,14 @@ module Api
         
             def destroy
                 @user.destroy
-                # session[:user_id] = nil if @user == current_user
                 head :no_content
+            end
+
+            def show_friends
+                @friends = @user.friends
+                # @sent_requests = @user.sent_friend_requests
+                # @received_requests = @user.received_friend_requests
+                render json: FriendSerializer.new(@friends).serializable_hash
             end
         
             private

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import './article.css';
 import Badge from 'react-bootstrap/Badge';
+
 
 const ShowArticle = () => {
   const [article, setArticle] = useState(null);
@@ -15,12 +16,15 @@ const ShowArticle = () => {
   const [categoryName, setCategoryName] = useState([]);
   const [likes, setLikes] = useState('');
   const user_id = localStorage.getItem('user_id');
+  const authToken = localStorage.getItem('authToken');
   const [canEditArticle, setEditArticle]= useState(false);
   const [comment, setComment]= useState();
   const [body, setBody]=useState();
   const [comments,setComments]= useState([]);
   const [commentUser, setCommentUser] = useState([]);
   const [commentUserName, setCommentUserName] = useState([]);
+  const [canComment, setCanComment]= useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`http://localhost:3000/api/v1/articles/${articleId}`)
@@ -32,8 +36,16 @@ const ShowArticle = () => {
 
         const articleUser=response.data.data.relationships.user.data.id;
         
-        if(articleUser == user_id){
+        // if(articleUser == user_id){
+        //   setEditArticle(true);
+        // }
+
+        if (articleUser && user_id && articleUser.toString() === user_id.toString()) {
           setEditArticle(true);
+        }
+
+        if(authToken){
+          setCanComment(true);
         }
         const comments = response.data.included
         .filter(item => item.type === 'comment')
@@ -45,22 +57,7 @@ const ShowArticle = () => {
           .map(item => item.relationships.user.data.id);
           setCommentUser(commentUser);
 
-          // commentUser.forEach((user) => {
-          // const userRequest = fetch(`http://localhost:3000/api/v1/users/${user}`); 
-          //   setCommentUserName(userRequest.data.attributes.username);
-          // });
-    
-          // const userPromises = commentUser.map(user => {
-          //   return fetch(`http://localhost:3000/api/v1/users/${user}`)
-          //     .then(response => response.json())
-          //     .then(data => data.attributes.username)
-              
-          //     .catch(error => {
-          //       console.error('Error fetching user data:', error);
-          //       return ''; 
-                
-          //     });
-          // });
+         
 
           const userPromises = commentUser.map(user => {
             return fetch(`http://localhost:3000/api/v1/users/${user}`)
@@ -102,8 +99,12 @@ const ShowArticle = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const authToken = localStorage.getItem('authToken');
-    const user_id = localStorage.getItem('user_id');
+    // const authToken = localStorage.getItem('authToken');
+    // const user_id = localStorage.getItem('user_id');
+    if(authToken ==null){
+      alert('You must log in to make a comment');
+      navigate('/Login');
+    }
 
     try {
       const response = await axios.post(`http://localhost:3000/api/v1/articles/${articleId}/comment`, {
@@ -169,6 +170,14 @@ const ShowArticle = () => {
               </Badge>
             ))}
           </div>
+          <div>
+          {canEditArticle && (
+            <Button  className="shared-button" as={Link} to={`/EditArticle/${articleId}`}>
+              Edit Article
+            </Button>
+            )}
+          </div>
+          
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
             <Form.Label column sm={2}>
               Write a Comment
@@ -182,6 +191,7 @@ const ShowArticle = () => {
               Add Comment
             </Button>
           </Form.Group>
+         
               <h5>Comments</h5>
                <table>
                {comments.map((comment, index) => (
@@ -193,13 +203,7 @@ const ShowArticle = () => {
                </table>
             
 
-          <div>
-          {canEditArticle && (
-            <Button  className="shared-button" as={Link} to={`/EditArticle/${articleId}`}>
-              Edit Article
-            </Button>
-            )}
-          </div>
+          
         </Form>
       </div>
     </div>

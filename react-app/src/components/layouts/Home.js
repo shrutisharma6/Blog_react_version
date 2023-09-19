@@ -13,7 +13,7 @@ import {
   Link as ChakraLink,
 } from '@chakra-ui/react';
 
-// Dummy data for blog posts
+
 const blogPosts = [
   {
     id: 1,
@@ -50,9 +50,9 @@ function Home() {
         <VStack spacing={4} align="stretch">
           {blogPosts.map((post) => (
             <Center key={post.id}>
-              {/* Center each blog post */}
+             
               <Box
-                bg="rgba(255, 255, 255, 0.15)" // Glassmorphism effect
+                bg="rgba(255, 255, 255, 0.15)" 
                 borderRadius="lg"
                 boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)"
                 p={4}
@@ -61,13 +61,13 @@ function Home() {
                 display="flex"
                 alignItems="center"
               >
-                {/* Equal-sized images with objectFit */}
+               
                 <Image
                   src={post.image}
                   alt={post.title}
-                  width="275px" // Set your preferred size here
-                  height="275px" // Set your preferred size here
-                  objectFit="cover" // Maintain aspect ratio and cover container
+                  width="275px" 
+                  height="275px" 
+                  objectFit="cover" 
                 />
                 <Flex direction="column" align="center" ml={4}>
                   <Heading as="h2" size="lg" my={2}>
@@ -81,7 +81,7 @@ function Home() {
             </Center>
           ))}
           <Center>
-            {/* Link to the "Articles" route */}
+            
             <ChakraLink as={Link} to="/Articles">
               <Button className="shared-button">
                 Read Articles
