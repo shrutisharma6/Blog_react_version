@@ -2,9 +2,6 @@ module Api
     module V1
         class UsersController < ApplicationController
             before_action :set_user, only: [:show, :edit, :update, :destroy, :show_friends]
-            # before_action :require_user, only: [:edit, :update]
-            # before_action :require_same_user, only: [:edit, :update, :destroy]
-            # skip_before_action :verify_authenticity_token
             def show
                 
                 render json: UserSerializer.new(@user, include: [:articles]).serializable_hash
@@ -36,8 +33,8 @@ module Api
                 @user=User.new(user_params)
                 
                 if @user.save
-                    sign_in(@user)
-                    render json: { token: @user.authenticatable_salt, user_id: @user.id }
+                    @user.send_confirmation_instructions
+                    render json: {message:'Confirmation mail sent'}
                 else
                     render json: {error: @user.errors.messages}, status: 422
                 end
@@ -50,8 +47,6 @@ module Api
 
             def show_friends
                 @friends = @user.friends
-                # @sent_requests = @user.sent_friend_requests
-                # @received_requests = @user.received_friend_requests
                 render json: FriendSerializer.new(@friends).serializable_hash
             end
         
