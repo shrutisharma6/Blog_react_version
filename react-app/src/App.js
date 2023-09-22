@@ -19,6 +19,7 @@ import EditUser from './components/users/EditUser';
 import CreateCategories from './components/categories/CreateCategories';
 import Friends from './components/users/Friends';
 import PendingRequest from './components/users/PendingRequest';
+import Message from './components/users/Message';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
 
         <Route path="/ShowUser/:userId/Friends" Component={Friends} />
         <Route path="/ShowUser/:userId/PendingRequest" Component={PendingRequest} />
+        <Route path="/ShowUser/:userId/Message" Component={Message} />
 
       </Routes>
       <Footer/>

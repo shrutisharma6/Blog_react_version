@@ -42,3 +42,44 @@
   color: #ff0000 !important;
   transform: scale(1.02); 
 }
+
+
+/* Chat box styles */
+.chat-box {
+  max-height: 400px; /* Adjust the maximum height of the chat box */
+  overflow-y: auto; /* Enable vertical scrolling for overflow */
+  padding: 10px;
+}
+
+/* Message styles */
+.message {
+  margin: 8px;
+  padding: 8px;
+  border-radius: 5px;
+  max-width: 80%; /* Adjust the maximum width of the message bubble */
+  clear: both; /* Clear the floating elements */
+}
+
+/* Sent message styles */
+.message.sent {
+  background-color: #3498db; /* Blue background for sent messages */
+  color: #fff; /* White text color for sent messages */
+  float: right;
+}
+
+/* Received message styles */
+.message.received {
+  background-color: #e5e5e5; /* Light gray background for received messages */
+  color: #000; /* Black text color for received messages */
+  float: left;
+}
+
+/* Input field styles */
+.form-control {
+  margin-top: 10px;
+}
+
+/* Send button styles */
+.shared-button {
+  margin-top: 10px;
+}

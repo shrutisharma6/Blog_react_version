@@ -28,16 +28,41 @@ const ShowUser = () => {
   
   const canEditUser = user_id == userId;
   const [isAdmin ,setIsAdmin] = useState(false);
-  const [canSendRequests, setCanSendRequests]=useState(true)
+  const [canSendRequests, setCanSendRequests]=useState(true);
+  const [canDeleteRequest, setCanDeleteRequests]=useState(false);
+  const [isFriend, setIsFriend] = useState(false);
 
 
 
-  useEffect(() => {
+useEffect(() => {
+    axios.get(`http://localhost:3000/api/v1/users/${userId}`)
+    .then(response => {
+      console.log('API Response:', response.data);
+      setUser(response.data);
+      if (response.data && response.data.data.attributes && response.data.data.attributes.admin === true) {
+        setIsAdmin(true);
+      }
+
+      const articles = response.data.included
+        .filter(item => item.type === 'article')
+        .map(article => ({
+          id: article.id,
+          title: article.attributes.title,
+          description: article.attributes.description,
+        }));
+      setArticles(articles);
+    })
+    .catch(error => {
+      console.error('Error fetching user:', error);
+    });
+
+
     axios.get(`http://localhost:3000/api/v1/users/${user_id}/friends`)
     .then(response => {
       const friendsList = response.data.data.map(friend => friend.id);
       if (friendsList.includes(userId)) {
         setCanSendRequests(false);
+        setIsFriend(true);
       }
     })
     .catch(error => {
@@ -49,33 +74,15 @@ const ShowUser = () => {
         const sentList = response.data.data.map(sent => sent.id);
         if(sentList.includes(userId)){
           setCanSendRequests(false);
+          setCanDeleteRequests(true);
         }
         })
       .catch(error => {
         console.error('Error checking friend request status:', error);
       });
-  });
+ } ,[userId]);
 
-    axios.get(`http://localhost:3000/api/v1/users/${userId}`)
-      .then(response => {
-        console.log('API Response:', response.data);
-        setUser(response.data);
-        if (response.data && response.data.data.attributes && response.data.data.attributes.admin === true) {
-          setIsAdmin(true);
-        }
-
-        const articles = response.data.included
-          .filter(item => item.type === 'article')
-          .map(article => ({
-            id: article.id,
-            title: article.attributes.title,
-            description: article.attributes.description,
-          }));
-        setArticles(articles);
-      })
-      .catch(error => {
-        console.error('Error fetching user:', error);
-      });
+    
  
 
   if (!user) {
@@ -134,15 +141,22 @@ const ShowUser = () => {
         <Button variant="solid" onClick={sendFriendRequest} className='shared-button'>
           Add Friend
         </Button>}
+        {canDeleteRequest && authToken && 
         <Button variant="solid"  className='shared-button-delete' onClick={handleDelete}>
           Delete Request
-        </Button>
+        </Button>}
 
         {canEditUser && isAdmin && (
           <Button variant="solid" as={Link} to={`/EditUser/${userId}`} className='shared-button'>
           Edit Profile
         </Button>
         )}
+
+        {isFriend && 
+          <Button variant="solid" as={Link} to={`/ShowUSer/${userId}/Message`} className='shared-button'>
+          Message
+        </Button>
+        }
 
         <Table variant="striped" colorScheme="blueAlpha" size="md" marginTop="20px">
           <Thead>

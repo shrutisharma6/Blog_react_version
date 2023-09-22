@@ -36,9 +36,6 @@ const ShowArticle = () => {
 
         const articleUser=response.data.data.relationships.user.data.id;
         
-        // if(articleUser == user_id){
-        //   setEditArticle(true);
-        // }
 
         if (articleUser && user_id && articleUser.toString() === user_id.toString()) {
           setEditArticle(true);

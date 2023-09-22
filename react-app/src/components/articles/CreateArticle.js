@@ -18,7 +18,6 @@ function CreateArticle() {
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [articleId, setArticleId]= useState('');
-  // const history = useHistory();
   const navigate = useNavigate();
 
   useEffect(() => {

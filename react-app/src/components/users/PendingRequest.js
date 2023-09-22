@@ -53,20 +53,20 @@ import {
         
       };
 
-      const handleDecline = async (senderId) => {
+    //   const handleDecline = async (senderId) => {
         
-          const response = await axios.post(`http://localhost:3000/api/v1/users/${senderId}/friend_requests/reject`, {
-            headers: {
-              Authorization: `Bearer ${authToken}`, 
-              'Content-Type': 'application/json',
-            },
-            user: {
-              user_id,
-            },
+    //       const response = await axios.delete(`http://localhost:3000/api/v1/users/${senderId}/friend_requests/reject`, {
+    //         headers: {
+    //           Authorization: `Bearer ${authToken}`, 
+    //           'Content-Type': 'application/json',
+    //         },
+    //         user: {
+    //           user_id,
+    //         },
             
-          }
-          );
-    };
+    //       }
+    //       );
+    // };
 
       return (
         <Flex
@@ -108,13 +108,13 @@ import {
                       </Button>
                     </Link>
                   </Td>
-                  <Td>
+                  {/* <Td>
                     <Link to={`/ShowUser/${sender.id}`}>
                       <Button variant="danger" size="sm" className="btn" onClick={handleDecline(sender.id)}>
                         Decline Request
                       </Button>
                     </Link>
-                  </Td>
+                  </Td> */}
                 </Tr>
               ))}
           </Tbody>

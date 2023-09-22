@@ -20,12 +20,6 @@ Rails.application.routes.draw do
         post '/login', to: 'sessions#create'
         delete '/logout', to: 'sessions#destroy'
         get '/signup', to: 'users#new'
-        # get '/friends', to: 'users#show_friends'
-        # post '/signup', to: 'users#create'
-        # post 'send_friend_request/:friend_id', to: 'users#send_friend_request'
-        # post 'accept_friend_request/:friend_request_id', to: 'users#accept_friend_request'
-        # post 'reject_friend_request/:friend_request_id', to: 'users#reject_friend_request'
-        
       end
       # resources :articles
       resources :articles do
@@ -39,12 +33,13 @@ Rails.application.routes.draw do
         member do
           get '/friends', to: 'users#show_friends'
           post 'friend_requests/send/:friend_id', to: 'friend_requests#send_friend_request'
-          post 'friend_requests/reject', to: 'friend_requests#reject_friend_request'
+          delete 'friend_requests/reject', to: 'friend_requests#reject_friend_request'
           get 'friend_requests/received', to: 'friend_requests#received_friend_requests'
           get 'friend_requests/sent', to: 'friend_requests#sent_friend_requests'
           
         end
         resources :friendships, only: [:create, :destroy] 
+        resources :messages
       end
       resources :categories, except: [:destroy]
       
