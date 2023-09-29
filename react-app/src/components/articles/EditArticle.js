@@ -14,6 +14,8 @@ function EditArticle() {
   const [description, setDescription] = useState('');
   const { articleId } = useParams();
   const navigate = useNavigate();
+  const authToken = localStorage.getItem('authToken');
+  const user_id = localStorage.getItem('user_id');
 
   useEffect(() => {
     axios
@@ -37,7 +39,7 @@ function EditArticle() {
       if (response.status === 204) {
         
         alert('Article deleted successfully');
-        navigate('/');
+        navigate('/Articles');
         
       } else {
         
@@ -57,6 +59,13 @@ function EditArticle() {
         article: {
           title,
           description,
+        },
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+          'Content-Type': 'application/json',
+        },
+        user: {
+          user_id,
         },
       });
 

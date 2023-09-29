@@ -14,16 +14,16 @@ const ShowArticle = () => {
   const { articleId } = useParams();
   const [userName, setUserName] = useState(null);
   const [categoryName, setCategoryName] = useState([]);
-  const [likes, setLikes] = useState('');
+  const [likes, setLikes] = useState(0);
   const user_id = localStorage.getItem('user_id');
   const authToken = localStorage.getItem('authToken');
   const [canEditArticle, setEditArticle]= useState(false);
-  const [comment, setComment]= useState();
   const [body, setBody]=useState();
   const [comments,setComments]= useState([]);
   const [commentUser, setCommentUser] = useState([]);
   const [commentUserName, setCommentUserName] = useState([]);
   const [canComment, setCanComment]= useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,19 +85,41 @@ const ShowArticle = () => {
         
 
         setCategoryName(categories);
-
-        const likes = response.data.attributes.likes;
-        setLikes(likes);
       })
+      axios.get(`http://localhost:3000/api/v1/articles/${articleId}/show_likes`)
+        .then(response => {
+          setLikes(response.data.likes_count);
+        })
       .catch(error => {
         console.error('Error fetching article:', error);
       });
   }, [articleId]);
 
+  const handleLikeClick = async () => {
+    
+    try {
+      const response = await axios.post(`http://localhost:3000/api/v1/articles/${articleId}/create_like`,  {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+          'Content-Type': 'application/json',
+        },
+        user: {
+          user_id,
+        },
+      });
+  
+      if (response.status === 200) {
+        setIsLiked(true);
+      }
+    } catch (error) {
+      console.error('Error liking the article:', error);
+    }
+  };
+  
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const authToken = localStorage.getItem('authToken');
-    // const user_id = localStorage.getItem('user_id');
     if(authToken ==null){
       alert('You must log in to make a comment');
       navigate('/Login');
@@ -118,7 +140,6 @@ const ShowArticle = () => {
       });
 
       if (response.status === 200) {
-        // setBody('');
         alert('Comment added successfully');
       }
     } catch (error) {
@@ -168,13 +189,18 @@ const ShowArticle = () => {
             ))}
           </div>
           <div>
+          <div>
+             <Button type="submit" variant="success" className="shared-button" onClick={handleLikeClick}>Like</Button>
+          </div>
+          <p>Likes: {likes}</p>
           {canEditArticle && (
             <Button  className="shared-button" as={Link} to={`/EditArticle/${articleId}`}>
               Edit Article
             </Button>
             )}
           </div>
-          
+          {canComment && 
+          <>
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
             <Form.Label column sm={2}>
               Write a Comment
@@ -188,8 +214,9 @@ const ShowArticle = () => {
               Add Comment
             </Button>
           </Form.Group>
-         
-              <h5>Comments</h5>
+          </>}
+          <br/>
+           <h5>Comments</h5>
                <table>
                {comments.map((comment, index) => (
                <tr key={index}>
@@ -197,10 +224,7 @@ const ShowArticle = () => {
                 <td>{comment}</td>
                </tr>
                ))}
-               </table>
-            
-
-          
+               </table> 
         </Form>
       </div>
     </div>

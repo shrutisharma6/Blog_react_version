@@ -35,9 +35,7 @@ import {
       }, []);
 
       const handleAccept = async (senderId) => {
-        
-        
-          const response = await axios.post(`http://localhost:3000/api/v1/users/${senderId}/friendships`, {
+        const response = await axios.post(`http://localhost:3000/api/v1/users/${senderId}/friendships`, {
             headers: {
               Authorization: `Bearer ${authToken}`, 
               'Content-Type': 'application/json',
@@ -53,20 +51,36 @@ import {
         
       };
 
-    //   const handleDecline = async (senderId) => {
-        
-    //       const response = await axios.delete(`http://localhost:3000/api/v1/users/${senderId}/friend_requests/reject`, {
-    //         headers: {
-    //           Authorization: `Bearer ${authToken}`, 
-    //           'Content-Type': 'application/json',
-    //         },
-    //         user: {
-    //           user_id,
-    //         },
-            
-    //       }
-    //       );
-    // };
+      const handleDecline = async (senderId) => {
+        const userConfirmed = window.confirm('Are you sure?');
+        if (!userConfirmed) {
+          return;
+        }
+        try {
+
+          const headers = {
+            Authorization: `Bearer ${authToken}`,
+            'Content-Type': 'application/json',
+          };
+      
+          const data = {
+            user: {
+              user_id,
+            },
+          };
+      
+          const response = await axios.delete(`http://localhost:3000/api/v1/users/${senderId}/friend_requests/reject/${user_id}`, {
+            headers,
+            data,
+          });
+        }
+        catch (error) {
+          console.error('Error deleting request:', error);
+          
+          alert('An error occurred while deleting the request');
+        }
+      };  
+    
 
       return (
         <Flex
@@ -88,7 +102,7 @@ import {
         <Table
           variant="striped"
         >
-          <Tbody>
+        <Tbody>
             {senders &&
               senders.map((sender) => (
                 <Tr key={sender.id}>
@@ -108,13 +122,13 @@ import {
                       </Button>
                     </Link>
                   </Td>
-                  {/* <Td>
+                  <Td>
                     <Link to={`/ShowUser/${sender.id}`}>
-                      <Button variant="danger" size="sm" className="btn" onClick={handleDecline(sender.id)}>
+                      <Button variant="danger" size="sm" className="btn" onClick= {() =>handleDecline(sender.id)}>
                         Decline Request
                       </Button>
                     </Link>
-                  </Td> */}
+                  </Td>
                 </Tr>
               ))}
           </Tbody>

@@ -4,16 +4,17 @@ class User <ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
     has_many :articles, dependent: :destroy
-    has_many :comments
+    has_many :comments, dependent: :destroy
+    has_many :likes, dependent: :destroy
 
     has_many :friendships, dependent: :destroy
     has_many :friends, through: :friendships
 
-    has_many :sent_friend_requests, foreign_key: :sent_by_id, class_name: 'FriendRequest'
-    has_many :received_friend_requests, foreign_key: :sent_to_id, class_name: 'FriendRequest'
+    has_many :sent_friend_requests, foreign_key: :sent_by_id, class_name: 'FriendRequest', dependent: :destroy
+    has_many :received_friend_requests, foreign_key: :sent_to_id, class_name: 'FriendRequest', dependent: :destroy
 
-    has_many :sent_messages, foreign_key: :sender_id, class_name: 'Message'
-    has_many :received_messages, foreign_key: :receiver_id, class_name: 'Message'
+    has_many :sent_messages, foreign_key: :sender_id, class_name: 'Message', dependent: :destroy
+    has_many :received_messages, foreign_key: :receiver_id, class_name: 'Message', dependent: :destroy
 
     
     

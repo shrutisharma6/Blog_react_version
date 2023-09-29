@@ -9,7 +9,6 @@ import Row from 'react-bootstrap/Row';
 import {
     Box,
     Text,
-    Flex,
     Container,
     Link as ChakraLink,
   } from '@chakra-ui/react';
@@ -22,12 +21,18 @@ function Message(){
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage]= useState();
     const [content, setContent]= useState();
+    const [userName, setUserName]= useState();
     useEffect(() => {
         axios.get(`http://localhost:3000/api/v1/users/${userId}/messages/${user_id}`)
         .then(response => {
             console.log(response.data);
             setMessages(response.data.data);
         })
+        axios.get(`http://localhost:3000/api/v1/users/${userId}`)
+        .then(response => {
+          setUserName(response.data.data.attributes.username);
+        })
+        
     }, []);
 
     const handleSend = async (e) => {
@@ -58,7 +63,7 @@ function Message(){
     return(
         <Box className='shared-background'>
         <Container className='glassmorphic-box'>
-        <Text as="h1">Messages</Text>
+        <Text as="h1">{userName}</Text>
 
 <div className='chat-box'>
           {messages &&
@@ -66,11 +71,11 @@ function Message(){
               <div
                 key={message.id}
                 className={`message ${
-                  message.attributes.sender.id === userId ? 'sent' : 'received'
+                  message.attributes.sender.id == userId ? 'received' : 'sent'
                 }`}
               >
                 <div className="message-content">
-                    <strong>{message.attributes.sender.username}:</strong>
+                    {/* <strong>{message.attributes.sender.username}:</strong> */}
                     {message.attributes.content}
                 </div>
               </div>
@@ -80,7 +85,7 @@ function Message(){
         <Form>
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
 
-            <Col sm={10}>
+            <Col sm={12}>
               <Form.Control type="text" placeholder="Type your message..."value={content} onChange={(e) => setContent(e.target.value)}/>
               <Button type="submit" variant="primary" className="shared-button" onClick={handleSend}>
               Send
@@ -88,9 +93,6 @@ function Message(){
             </Col>
             
           </Form.Group>
-        {/* <Form.Group>
-            
-          </Form.Group> */}
           </Form>
      
         </Container>

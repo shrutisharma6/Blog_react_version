@@ -71,3 +71,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #Psych gem
 gem 'psych', '~>2.0.17'
+
+gem 'sidekiq', '~> 6.0'
+
+gem 'redis'
+
+# gem 'activeadmin'

@@ -28,18 +28,22 @@ function App() {
       <Navigation/>
       <Routes>
         <Route path="/" Component={Home} />
+        
         <Route path="/Articles" Component={Articles} />
-        <Route path="/Users" Component={Users} />
-        <Route path="/Categories" Component={Categories} />
-        <Route path="/Login" Component={Login} />
-        <Route path="/SignUp" Component={SignUp} />
         <Route path="/CreateArticle" Component={CreateArticle} />
         <Route path="/ShowArticle/:articleId" Component={ShowArticle} />
         <Route path="/ShowUser/:userId" Component={ShowUser} />
         <Route path="/EditArticle/:articleId" Component={EditArticle} />
+
         <Route path="/ShowCategory/:categoryId" Component={ShowCategory} />
         <Route path="/CreateCategories" Component={CreateCategories} />
+        <Route path="/Categories" Component={Categories} />
+
+        <Route path="/Users" Component={Users} />
         <Route path="/EditUser/:userId" Component={EditUser} />
+
+        <Route path="/Login" Component={Login} />
+        <Route path="/SignUp" Component={SignUp} />
 
         <Route path="/ShowUser/:userId/Friends" Component={Friends} />
         <Route path="/ShowUser/:userId/PendingRequest" Component={PendingRequest} />

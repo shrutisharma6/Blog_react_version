@@ -2,6 +2,8 @@ require_relative "boot"
 
 require "rails/all"
 require 'will_paginate'
+require 'sidekiq'
+
 
 
 # Require the gems listed in Gemfile, including any gems
@@ -22,6 +24,9 @@ module Blog
     # config.eager_load_paths << Rails.root.join("extras")
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
+
+    config.active_job.queue_adapter = :sidekiq
+
 
 
     config.before_configuration do

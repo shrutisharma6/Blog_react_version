@@ -1,12 +1,15 @@
 module Api
     module V1
         class FriendRequestsController <ApplicationController
-          before_action :authenticate_user_custom, only: [:send_friend_request, :reject_friend_request, :destroy]
+
+          before_action :authenticate_user_custom, only: [:send_friend_request]
+
             def send_friend_request
                 friend = User.find(params[:friend_id])
                 friend_request = FriendRequest.new(sent_by: @current_user, sent_to: friend, status: false)
                 if friend_request.save
                   render json: { message: 'Friend request sent successfully.' }
+                  FriendRequestReminderJob.perform_in(2.minutes, friend.id, friend_request.id)
                 else
                   render json: { error: 'Friend request could not be sent.' }, status: :unprocessable_entity
                 end
@@ -14,7 +17,8 @@ module Api
 
             def reject_friend_request
               friend = User.find(params[:id])
-              friend_request= FriendRequest.find_by(sent_by: friend.id, sent_to:@current_user.id)
+              user = User.find(params[:user_id])
+              friend_request= FriendRequest.find_by(sent_by: friend.id, sent_to:user.id)
               if friend_request
                 friend_request.destroy
                 render json: { message: 'Friend request rejected.' }

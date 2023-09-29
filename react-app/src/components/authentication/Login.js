@@ -5,9 +5,9 @@ import {
   Input,
   FormLabel,
   FormControl,
-  Checkbox,
   Heading,
   Flex, 
+  Link,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -50,6 +50,11 @@ function Login({ onLogin }) {
     
   };
 
+
+  const navigateToForgotPassword = () => {
+    navigate('/forgot-password'); 
+  };
+
   return (
     <div className="login-background">
       <Flex
@@ -72,7 +77,7 @@ function Login({ onLogin }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="input-field"
-              required // Add required attribute
+              required 
             />
             <br/> <br/>
           </FormControl>
@@ -84,10 +89,16 @@ function Login({ onLogin }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="input-field"
-              required // Add required attribute
+              required 
             />
+            {/* localhost:3000/users/password/new */}
           </FormControl>
+          {/* <Link mt={4} to ="http://www.google.com">
+          Forgot Password?
+          </Link> */}
+          <a href="http://localhost:3000/users/password/new">Forgot Password ?</a>
           <br/> 
+
           <Button type="submit" colorScheme="blue" className="login-button">
             Log In
           </Button>

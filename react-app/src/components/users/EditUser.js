@@ -49,7 +49,7 @@ function EditUser() {
         alert('Failed to delete the Profile');
       }
     } catch (error) {
-      console.error('Error deleting article:', error);
+      console.error('Error deleting profile:', error);
       
       alert('An error occurred while deleting the profile');
     }
@@ -61,7 +61,6 @@ function EditUser() {
       const response = await axios.patch(`http://localhost:3000/api/v1/users/${userId}`, {
         user: {
           username,
-          email,
           password,
         },
       });
@@ -83,6 +82,16 @@ function EditUser() {
       <div className="glassmorphic-box">
         <h1 className="mt-4">{username}</h1>
         <Form>
+
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Label column sm={2}>
+              Email
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control type="text" disabled readOnly value={email}  />
+            </Col>
+          </Form.Group>
+
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
             <Form.Label column sm={2}>
               Username
@@ -91,14 +100,7 @@ function EditUser() {
               <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
-              Email
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-            </Col>
-          </Form.Group>
+          
 
           <Form.Group as={Row} className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label column sm={2}>

@@ -43,6 +43,10 @@ useEffect(() => {
         setIsAdmin(true);
       }
 
+      if (user_id == userId){
+          setCanSendRequests(false);
+      }
+
       const articles = response.data.included
         .filter(item => item.type === 'article')
         .map(article => ({
@@ -81,7 +85,7 @@ useEffect(() => {
         console.error('Error checking friend request status:', error);
       });
  } ,[userId]);
-
+  
     
  
 
@@ -146,11 +150,11 @@ useEffect(() => {
           Delete Request
         </Button>}
 
-        {canEditUser && isAdmin && (
+        {canEditUser && 
           <Button variant="solid" as={Link} to={`/EditUser/${userId}`} className='shared-button'>
           Edit Profile
         </Button>
-        )}
+        }
 
         {isFriend && 
           <Button variant="solid" as={Link} to={`/ShowUSer/${userId}/Message`} className='shared-button'>

@@ -41,7 +41,7 @@ function SignUp({ onSignUp }) {
       } 
 
       if (response.status === 201) {
-        onSignUp();
+        // onSignUp();
         setUsername('');
         setEmail('');
         setPassword('');

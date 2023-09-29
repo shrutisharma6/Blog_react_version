@@ -37,20 +37,41 @@ function CreateArticle() {
     const selectedCategories = selectedOptions.map((option) => option.value);
     setSelectedCategories(selectedCategories);
   };
+
+  // const handleImageUpload = (e) => {
+  //   setArticleImage(e.target.files[0]);
+  //   console.log(articleImage);
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const authToken = localStorage.getItem('authToken');
     const user_id = localStorage.getItem('user_id');
+
+    //  const formData = new FormData();
+
+    //   formData.append('article[title]', title);
+
+    //   formData.append('article[description]', description);
+
+    //   formData.append('article[category_ids]', selectedCategories);
+
+    //   formData.append('article[image]', articleImage);
+    //   formData.append('user[user_id]', user_id);
+    //   formData.append('authToken', authToken);
+
+    
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/articles', {
+      // debugger
+      const response = await axios.post('http://localhost:3000/api/v1/articles', 
+      {
         article: {
           title,
           description,
           category_ids: selectedCategories,
         },
         headers: {
-          Authorization: `Bearer ${authToken}`, 
+           Authorization: `Bearer ${authToken}`, 
           'Content-Type': 'application/json',
         },
         user: {
@@ -76,6 +97,7 @@ function CreateArticle() {
       <div className="glassmorphic-box">
         <h1 className="mt-4">Create Article</h1>
         <Form >
+        {/* enctype="multipart/form-data" */}
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
             <Form.Label column sm={2} >
               Title
@@ -99,6 +121,14 @@ function CreateArticle() {
               />
             </Col>
           </Form.Group>
+          {/* <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Label column sm={3} >
+              Add Image
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control type="file" onChange={handleImageUpload} />
+            </Col>
+          </Form.Group> */}
           <Form.Group as={Row} className="mb-3">
             <Form.Label column sm={4}>
               Choose Categories
