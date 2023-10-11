@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
- 
+import ActionCable from 'actioncable'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -22,10 +22,15 @@ function Message(){
     const [newMessage, setNewMessage]= useState();
     const [content, setContent]= useState();
     const [userName, setUserName]= useState();
+
+    
+
     useEffect(() => {
+
+      
+
         axios.get(`http://localhost:3000/api/v1/users/${userId}/messages/${user_id}`)
         .then(response => {
-            console.log(response.data);
             setMessages(response.data.data);
         })
         axios.get(`http://localhost:3000/api/v1/users/${userId}`)
@@ -33,7 +38,32 @@ function Message(){
           setUserName(response.data.data.attributes.username);
         })
         
-    }, []);
+    }, [newMessage]);
+
+      useEffect(() => {    
+        if (user_id) {
+         
+          const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+  
+         const subscription = cable.subscriptions.create
+          (
+            {
+              channel: 'MessagesChannel',
+              user_id: user_id,
+              recipient_id: userId,
+            },
+            {
+              received: (message) => {
+                console.log("message", message);
+                // setMessages([...messages, message])
+                setNewMessage(message);
+              }
+            }
+          )
+      
+        }
+      },)
+  
 
     const handleSend = async (e) => {
         e.preventDefault();
@@ -68,18 +98,34 @@ function Message(){
 <div className='chat-box'>
           {messages &&
             messages.map((message) => (
+              
               <div
                 key={message.id}
                 className={`message ${
-                  message.attributes.sender.id == userId ? 'received' : 'sent'
+                  message.attributes.sender_id == userId ? 'received' : 'sent'
                 }`}
               >
+                {console.log(message)}
                 <div className="message-content">
-                    {/* <strong>{message.attributes.sender.username}:</strong> */}
                     {message.attributes.content}
+          
                 </div>
               </div>
             ))}
+
+          {/* {newMessage &&  
+              <div
+                className={`message ${
+                  newMessage.sender_id == userId ? 'received' : 'sent'
+                }`}
+              >
+                {console.log(newMessage)}
+                <div className="message-content">
+                    {newMessage.content}
+          
+                </div>
+              </div>
+            } */}
         </div>
         
         <Form>

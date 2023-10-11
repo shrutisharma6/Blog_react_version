@@ -9,11 +9,21 @@ import { Box, Center, Container, Flex, Th } from '@chakra-ui/react';
 const Articles = () => {
   const [articles, setArticles] = useState([]);
   const { colorMode } = useColorMode(); 
+  const user_id = localStorage.getItem('user_id');
+  const authToken = localStorage.getItem('authToken');
 
   useEffect(() => {
     const API_URL = 'http://localhost:3000/api/v1/articles';
     axios
-      .get(API_URL)
+      .get(API_URL,
+      {
+      params: {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+          'Content-Type': 'application/json',
+        },
+        user_id: user_id,
+      }})
       .then((response) => {
         setArticles(response.data.data);
       })

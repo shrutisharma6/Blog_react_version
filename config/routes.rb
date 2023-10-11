@@ -1,11 +1,12 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
-  # devise_for :admin_users, ActiveAdmin::Devise.config
-  # ActiveAdmin.routes(self)
+  
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   devise_for :users, controllers: {
         sessions: 'api/v1/sessions'
       }
- 
+  mount ActionCable.server => '/cable'
   # root 'articles#home'
   # resources:articles
   # get 'signup', to: 'users#new'

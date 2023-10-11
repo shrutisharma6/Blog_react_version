@@ -28,4 +28,16 @@ class User <ApplicationRecord
                       length: { maximum: 100 },
                       format: { with: EMAIL_REGEX }
     # has_secure_password
+
+    def self.ransackable_attributes(auth_object = nil)
+      ["admin", "confirmation_sent_at", "confirmation_token", "confirmed_at", "created_at", "email", "encrypted_password", "id", "remember_created_at", "reset_password_sent_at", "reset_password_token", "unconfirmed_email", "updated_at", "username"]
+    end
+
+    def self.ransackable_associations(auth_object = nil)
+      ["articles", "comments", "friends", "friendships", "likes", "received_friend_requests", "received_messages", "sent_friend_requests", "sent_messages"]
+    end
+
+    
+
+  
 end

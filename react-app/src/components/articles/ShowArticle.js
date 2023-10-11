@@ -27,7 +27,29 @@ const ShowArticle = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/v1/articles/${articleId}`)
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${authToken}`, 
+        'Content-Type': 'application/json',
+      },
+      user: {
+        user_id,
+      },
+    };
+    axios.get(`http://localhost:3000/api/v1/articles/${articleId}`,
+    {
+      // headers: {
+      //   Authorization: `Bearer ${authToken}`, 
+      //   'Content-Type': 'application/json',
+      // },
+      params: {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+          'Content-Type': 'application/json',
+        },
+        user_id: user_id,
+      },
+    })
       .then(response => {
         console.log('API Response:', response.data);
         setArticle(response.data);

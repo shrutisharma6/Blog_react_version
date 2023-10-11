@@ -21,7 +21,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'will_paginate', '~> 3.1.0'
+# gem 'will_paginate', '~> 3.1.0'
 gem 'jsonapi-serializer'
 gem 'rack-cors'
 gem 'devise'
@@ -36,6 +36,8 @@ gem 'pry'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+
+gem 'bootstrap'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -74,6 +76,15 @@ gem 'psych', '~>2.0.17'
 
 gem 'sidekiq', '~> 6.0'
 
-gem 'redis'
+gem 'redis', '<5'
 
 # gem 'activeadmin'
+
+gem 'sprockets', '<4'
+
+
+gem 'cancancan'
+
+gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'
+gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin'
+gem "sassc-rails", "~> 2.1"

@@ -4,7 +4,7 @@ module Api
             before_action :set_article, only: [:show, :edit, :update, :destroy, :likes_count, :create_like, :destroy_like, :comment, :show_comment]
             before_action :article_params, only: [:create, :update]
             before_action :authenticate_user_custom, except: [:index, :show, :show_comment, :likes_count, :destroy]
-            # before_action :authentication_for_create_article, only: [:create]
+            before_action :authenticate_user_can_can, only: [:show, :index]
             def comment
                 @comment= @article.comments.create(params.require(:comment).permit(:body))
                 @comment.user= @current_user
@@ -20,14 +20,16 @@ module Api
             end
         
             def show
-                render json: ArticleSerializer.new(@article, include: [:user, :categories, :comments]).serializable_hash
-
+                if can? :read, @article
+                    render json: ArticleSerializer.new(@article, include: [:user, :categories, :comments]).serializable_hash
+                else
+                    render json: {message: "Only friends can view the article"}
+                end
             end
         
             def index
-                @articles = Article.all
+                @articles = Article.accessible_by(current_ability)
                 render json: ArticleSerializer.new(@articles).serializable_hash
-
             end
         
             def new
@@ -43,7 +45,7 @@ module Api
                 # if params[:article][:image]
                 #     @article.image.attach(params[:article][:image])
                 # end
-                @article.user = @current_user
+                @article.user =@current_user
                 if @article.save
                     render json: ArticleSerializer.new(@article).serializable_hash
 
@@ -53,6 +55,7 @@ module Api
             end
         
             def update
+                # authorize! :update, @article
                 if @article.update(article_params)
                     render json: ArticleSerializer.new(@article).serializable_hash
                 else

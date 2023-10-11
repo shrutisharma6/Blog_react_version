@@ -1,6 +1,6 @@
 class ArticleSerializer
   include JSONAPI::Serializer
-  attributes :title, :description, :image
+  attributes :title, :description
   belongs_to :user
   has_many :comments
   has_many :likes

@@ -8,6 +8,8 @@ module Api
                 @receiver=User.find(params[:user_id])
                 @message= Message.new(sender_id: @sender.id, receiver_id: @receiver.id, content: params[:message][:content])
                 if @message.save
+                    ActionCable.server.broadcast("message_#{@receiver.id}#{@sender.id}", @message)
+                    ActionCable.server.broadcast("message_#{@sender.id}#{@receiver.id}", @message)
                     render json:{ message: 'Message sent successfully.' }
                 else
                     render json: { message: 'Failed to send message'}
