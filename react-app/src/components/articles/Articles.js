@@ -4,11 +4,9 @@ import './article.css';
 import { Link } from 'react-router-dom';
 import { Table, Tbody, Tr, Td, Thead } from "@chakra-ui/react"; 
 import { Button } from 'react-bootstrap'; 
-import { useColorMode } from '@chakra-ui/color-mode'; 
 import { Box, Center, Container, Flex, Th } from '@chakra-ui/react'; 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
-  const { colorMode } = useColorMode(); 
   const user_id = localStorage.getItem('user_id');
   const authToken = localStorage.getItem('authToken');
 
@@ -51,7 +49,6 @@ const Articles = () => {
         <h1>Articles</h1>
         <Table
           variant="striped"
-          colorScheme={colorMode === 'dark' ? 'gray' : 'teal'} 
         >
           <Thead>
             <Th>Title</Th>

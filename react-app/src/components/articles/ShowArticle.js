@@ -38,10 +38,6 @@ const ShowArticle = () => {
     };
     axios.get(`http://localhost:3000/api/v1/articles/${articleId}`,
     {
-      // headers: {
-      //   Authorization: `Bearer ${authToken}`, 
-      //   'Content-Type': 'application/json',
-      // },
       params: {
         headers: {
           Authorization: `Bearer ${authToken}`, 

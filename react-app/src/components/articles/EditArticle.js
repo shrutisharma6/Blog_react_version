@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { Alert } from 'react-bootstrap';
 import './article.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,14 +13,24 @@ function EditArticle() {
   const [article, setArticle] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [error, setError] = useState('');
   const { articleId } = useParams();
   const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState('');
   const authToken = localStorage.getItem('authToken');
   const user_id = localStorage.getItem('user_id');
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/v1/articles/${articleId}`)
+      .get(`http://localhost:3000/api/v1/articles/${articleId}`,
+      {
+        params: {
+          headers: {
+            Authorization: `Bearer ${authToken}`, 
+            'Content-Type': 'application/json',
+          },
+          user_id: user_id,
+        }})
       .then((response) => {
         setArticle(response.data);
         setTitle(response.data.data.attributes.title);
@@ -38,17 +49,17 @@ function EditArticle() {
       const response = await axios.delete(`http://localhost:3000/api/v1/articles/${articleId}`);
       if (response.status === 204) {
         
-        alert('Article deleted successfully');
-        navigate('/Articles');
+        setSuccessMessage('Article deleted successfully');
+        setTimeout(() => {
+          navigate('/Articles');
+        }, 1000);
         
       } else {
         
         alert('Failed to delete the article');
       }
     } catch (error) {
-      console.error('Error deleting article:', error);
-      
-      alert('An error occurred while deleting the article');
+      setError('Failed to delete article');
     }
   };
   const handleSubmit = async (e) => {
@@ -72,10 +83,13 @@ function EditArticle() {
       if (response.status === 200) {
         setTitle('');
         setDescription('');
-        navigate('/Articles');
-        alert('Article updated successfully');
+        setSuccessMessage('Article updated successfully');
+        setTimeout(() => {
+          navigate('/Articles');
+        }, 1000);
       }
     } catch (error) {
+      setError('Failed to update article');
       console.error('Error updating article:', error);
     }
   };
@@ -83,6 +97,16 @@ function EditArticle() {
   return (
     <div className="shared-background">
       <div className="glassmorphic-box">
+      {successMessage && (
+          <Alert variant="success">
+            {successMessage}
+          </Alert>
+          ) }
+        {error && 
+          <Alert variant="danger" dismissible>
+            {error}
+          </Alert>
+        }
         <h1 className="mt-4">{title}</h1>
         <Form>
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">

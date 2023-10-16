@@ -50,11 +50,6 @@ function Login({ onLogin }) {
     
   };
 
-
-  const navigateToForgotPassword = () => {
-    navigate('/forgot-password'); 
-  };
-
   return (
     <div className="login-background">
       <Flex
@@ -91,11 +86,7 @@ function Login({ onLogin }) {
               className="input-field"
               required 
             />
-            {/* localhost:3000/users/password/new */}
           </FormControl>
-          {/* <Link mt={4} to ="http://www.google.com">
-          Forgot Password?
-          </Link> */}
           <a href="http://localhost:3000/users/password/new">Forgot Password ?</a>
           <br/> 
 

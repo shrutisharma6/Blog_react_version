@@ -23,12 +23,7 @@ function Message(){
     const [content, setContent]= useState();
     const [userName, setUserName]= useState();
 
-    
-
     useEffect(() => {
-
-      
-
         axios.get(`http://localhost:3000/api/v1/users/${userId}/messages/${user_id}`)
         .then(response => {
             setMessages(response.data.data);
@@ -112,20 +107,6 @@ function Message(){
                 </div>
               </div>
             ))}
-
-          {/* {newMessage &&  
-              <div
-                className={`message ${
-                  newMessage.sender_id == userId ? 'received' : 'sent'
-                }`}
-              >
-                {console.log(newMessage)}
-                <div className="message-content">
-                    {newMessage.content}
-          
-                </div>
-              </div>
-            } */}
         </div>
         
         <Form>

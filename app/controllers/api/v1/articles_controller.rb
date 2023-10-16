@@ -42,9 +42,6 @@ module Api
         
             def create
                 @article = Article.new(article_params)
-                # if params[:article][:image]
-                #     @article.image.attach(params[:article][:image])
-                # end
                 @article.user =@current_user
                 if @article.save
                     render json: ArticleSerializer.new(@article).serializable_hash
@@ -55,11 +52,10 @@ module Api
             end
         
             def update
-                # authorize! :update, @article
                 if @article.update(article_params)
                     render json: ArticleSerializer.new(@article).serializable_hash
                 else
-                    render json: {error: @article.error.messages}, status: 422
+                    render json: {error: @article.errors.messages}, status: 422
                 end
         
             end
@@ -68,7 +64,7 @@ module Api
                 if @article.destroy
                     head :no_content
                 else 
-                    render json: {error: @article.error.messages}, status: 422
+                    render json: {error: @article.errors.messages}, status: 422
                 end
                 
             end

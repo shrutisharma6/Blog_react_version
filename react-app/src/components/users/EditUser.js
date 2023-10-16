@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import './user.css';
+import { Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 function EditUser() {
@@ -15,6 +16,8 @@ function EditUser() {
   const [password, setPassword] = useState('');
   const { userId } = useParams();
   const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   
 
   useEffect(() => {
@@ -38,20 +41,19 @@ function EditUser() {
     try {
       const response = await axios.delete(`http://localhost:3000/api/v1/users/${userId}`);
       if (response.status === 204) {
-        
-        alert('Profile deleted successfully');
+        setSuccessMessage('Profile deleted successfully');
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
         localStorage.removeItem('authToken');
         localStorage.removeItem('user_id');
-        navigate('/');
-        
       } else {
         
         alert('Failed to delete the Profile');
       }
     } catch (error) {
       console.error('Error deleting profile:', error);
-      
-      alert('An error occurred while deleting the profile');
+      setError('Failed to delete profile');
     }
   };
   const handleSubmit = async (e) => {
@@ -66,14 +68,13 @@ function EditUser() {
       });
 
       if (response.status === 200) {
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        navigate(`/ShowUser/${userId}`);
-        alert('Profile Updated successfully');
+        setSuccessMessage('Profile Updated successfully');
+        setTimeout(() => {
+          navigate(`/ShowUser/${userId}`);
+        }, 2000);
       }
     } catch (error) {
-      console.error('Error updating user:', error);
+      setError('Failed to update profile');
     }
   };
 
@@ -81,6 +82,16 @@ function EditUser() {
     <div className="shared-background">
       <div className="glassmorphic-box">
         <h1 className="mt-4">{username}</h1>
+        {successMessage && (
+          <Alert variant="success">
+            {successMessage}
+          </Alert>
+          ) }
+          {error && 
+          <Alert variant="danger" dismissible>
+            {error}
+          </Alert>
+          }
         <Form>
 
         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">

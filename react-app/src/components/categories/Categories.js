@@ -3,12 +3,10 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Table, Tbody, Tr, Td } from "@chakra-ui/react"; 
 import { Button } from 'react-bootstrap'; 
-import { useColorMode } from '@chakra-ui/color-mode'; 
 import { Box, Center, Container, Flex } from '@chakra-ui/react';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const { colorMode } = useColorMode(); 
   const user_id = localStorage.getItem('user_id');
   const [isAdmin ,setIsAdmin] = useState(false);
   useEffect(() => {
@@ -70,7 +68,6 @@ const Categories = () => {
                     
         <Table
           variant="striped"
-          colorScheme={colorMode === 'dark' ? 'gray' : 'teal'} 
         >
           <Tbody>
             {categories &&

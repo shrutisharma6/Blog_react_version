@@ -19,7 +19,7 @@ const blogPosts = [
     id: 1,
     title: 'How to Start Blogging',
     content:
-      `Starting a blog is an exciting journey into the world of digital expression and communication. To embark on this endeavor, follow these key steps. First, select a niche or topic you're passionate about; this will be the core focus of your blog. Next, choose a blogging platform, such as WordPress, Blogger, or Medium, and set up your blog. Craft high-quality, engaging content that provides value to your target audience. Optimize your posts for search engines (SEO) to increase discoverability.`,
+      `Starting a blog is an exciting journey into the world of digital expression and communication. To embark on this endeavor, follow these key steps. First, select a niche or topic you're passionate about; this will be the core focus of your blog. Next, choose a blogging platform, such as Blogify, Blogger, or Medium, and set up your blog. Craft high-quality, engaging content that provides value to your target audience. Optimize your posts for search engines (SEO) to increase discoverability.`,
     image: 'https://www.wpbeginner.com/wp-content/uploads/2018/08/blogplatforms.png',
   },
   {
@@ -29,7 +29,6 @@ const blogPosts = [
       'The Art of Writing" is a timeless craft that transcends generations and cultures. It is the skill of transforming thoughts, emotions, and ideas into written words that have the power to inspire, inform, and captivate readers. It involves not only a deep understanding of language but also an innate creativity that allows writers to paint vivid pictures with words, transporting readers to different worlds and perspectives. ',
     image: 'https://content-writing-india.com/blog/wp-content/uploads/2013/05/a59f04e9e0a1069b683184ceb1a51657.png',
   },
-  // Add more blog posts here
 ];
 
 function Home() {

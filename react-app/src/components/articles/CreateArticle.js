@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import './article.css';
-import { FormGroup } from 'react-bootstrap';
+import { FormGroup, Alert } from 'react-bootstrap';
 import { Select } from '@chakra-ui/react';
 import {  useNavigate} from 'react-router-dom';
 
@@ -17,7 +17,7 @@ function CreateArticle() {
   const [error, setError] = useState('');
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [articleId, setArticleId]= useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,32 +37,14 @@ function CreateArticle() {
     const selectedCategories = selectedOptions.map((option) => option.value);
     setSelectedCategories(selectedCategories);
   };
-
-  // const handleImageUpload = (e) => {
-  //   setArticleImage(e.target.files[0]);
-  //   console.log(articleImage);
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const authToken = localStorage.getItem('authToken');
     const user_id = localStorage.getItem('user_id');
-
-    //  const formData = new FormData();
-
-    //   formData.append('article[title]', title);
-
-    //   formData.append('article[description]', description);
-
-    //   formData.append('article[category_ids]', selectedCategories);
-
-    //   formData.append('article[image]', articleImage);
-    //   formData.append('user[user_id]', user_id);
-    //   formData.append('authToken', authToken);
-
     
+
     try {
-      // debugger
       const response = await axios.post('http://localhost:3000/api/v1/articles', 
       {
         article: {
@@ -78,26 +60,38 @@ function CreateArticle() {
           user_id,
         },
         
-      }
+      },
       );
 
       if (response.status === 200) {
         setTitle('');
         setDescription('');
-        navigate('/Articles');
-        alert('Article created successfully');
+        setSuccessMessage('Article created successfully');
+        setTimeout(() => {
+          navigate('/Articles');
+        }, 2000);
       }
     } catch (error) {
       setError('Failed to create article');
+      console.log('Failed');
     }
   };
 
   return (
     <div className="shared-background">
       <div className="glassmorphic-box">
+        {successMessage && (
+          <Alert variant="success">
+            {successMessage}
+          </Alert>
+          ) }
+        {error && 
+          <Alert variant="danger" dismissible>
+            {error}
+          </Alert>
+        }
         <h1 className="mt-4">Create Article</h1>
         <Form >
-        {/* enctype="multipart/form-data" */}
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
             <Form.Label column sm={2} >
               Title
@@ -121,14 +115,6 @@ function CreateArticle() {
               />
             </Col>
           </Form.Group>
-          {/* <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={3} >
-              Add Image
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control type="file" onChange={handleImageUpload} />
-            </Col>
-          </Form.Group> */}
           <Form.Group as={Row} className="mb-3">
             <Form.Label column sm={4}>
               Choose Categories
@@ -154,7 +140,6 @@ function CreateArticle() {
             </Button>
           </Form.Group>
         </Form>
-        {error && <p className="text-danger">{error}</p>}
       </div>
     </div>
   );
